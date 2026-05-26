@@ -344,11 +344,32 @@ export default function App() {
 
 async function handleLogin() {
     setLoginError("");
-    if (passcode === MASTER_CODE) {
-      setRole("master");
-      setActiveTempCode(null);
-      return;
-    }
+if (passcode === MASTER_CODE) {
+  setRole("master");
+  setActiveTempCode(null);
+
+await supabase
+  .from("temp_codes")
+  .delete()
+  .lt("expires_at", new Date().toISOString());
+  
+  const { data } = await supabase
+    .from("temp_codes")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (data) {
+    setTempCodes(
+      data.map(item => ({
+        code: item.code,
+        expiresAt: new Date(item.expires_at).getTime(),
+        active: item.active
+      }))
+    );
+  }
+
+  return;
+}
    const { data, error } = await supabase
   .from('temp_codes')
   .select('*')
