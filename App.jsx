@@ -378,10 +378,34 @@ if (
     else if (activeTempCode) setTempHistoryMap((old) => ({ ...old, [activeTempCode]: [result, ...(old[activeTempCode] || [])] }));
   }
 
-  function createCode() {
-    const safeMinutes = Math.max(1, Number(minutes || 1));
-    setTempCodes((old) => [{ code: makeTempCode(), minutes: safeMinutes, createdAt: Date.now(), expiresAt: Date.now() + safeMinutes * 60 * 1000, active: true }, ...old]);
-  }
+async function createCode() {
+  const safeMinutes = Math.max(1, Number(minutes || 1));
+
+  const newCode = makeTempCode();
+
+  const expiresAt = new Date(
+    Date.now() + safeMinutes * 60 * 1000
+  ).toISOString();
+
+  await supabase.from('temp_codes').insert([
+    {
+      code: newCode,
+      expires_at: expiresAt,
+      active: true
+    }
+  ]);
+
+  setTempCodes((old) => [
+    {
+      code: newCode,
+      minutes: safeMinutes,
+      createdAt: Date.now(),
+      expiresAt: Date.now() + safeMinutes * 60 * 1000,
+      active: true
+    },
+    ...old
+  ]);
+}
 
   function extendCode(code, addMinutes) {
     setTempCodes((old) => old.map((item) => item.code === code ? { ...item, expiresAt: Math.max(Date.now(), item.expiresAt) + addMinutes * 60 * 1000, active: true } : item));
