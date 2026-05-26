@@ -488,9 +488,15 @@ async function toggleCode(code) {
                 <Button onClick={handleLogin} className="w-full rounded-2xl bg-cyan-300 py-6 text-base font-black text-slate-950 shadow-[0_0_24px_rgba(34,211,238,0.8)] hover:bg-cyan-200">登入</Button>
               </div>
             </Panel>
-            <p className="mt-6 text-center text-xs text-slate-500/70">
-  安哥嘔心瀝血製作，請勿竊取
-</p>
+<div className="mt-6 text-center">
+  <p className="text-sm tracking-[0.25em] text-cyan-300/80 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]">
+    安哥嘔心瀝血製作
+  </p>
+
+  <p className="mt-1 text-[11px] tracking-[0.18em] text-slate-400/70">
+    PLEASE DO NOT STEAL
+  </p>
+</div>
           </motion.div>
         </div>
       </div>
@@ -570,9 +576,15 @@ async function toggleCode(code) {
         <div className="mt-6 rounded-[2rem] border border-cyan-300/20 bg-slate-950/50 p-4 text-center text-xs text-slate-400 backdrop-blur-xl">本系統為虛擬輔助介面與娛樂性數據評估，不保證任何實際結果與收益</div>
       </div>
 
-<p className="mt-4 text-center text-xs text-slate-500/70">
-  安哥嘔心瀝血製作，請勿竊取
-</p>
+<div className="mt-6 text-center">
+  <p className="text-sm tracking-[0.25em] text-cyan-300/80 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]">
+    安哥嘔心瀝血製作
+  </p>
+
+  <p className="mt-1 text-[11px] tracking-[0.18em] text-slate-400/70">
+    PLEASE DO NOT STEAL
+  </p>
+</div>
       
       {selectedHistory && <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/75 p-4 backdrop-blur-md" onClick={() => setSelectedHistory(null)}><div className="max-h-[88vh] w-full max-w-5xl overflow-y-auto rounded-[2rem] border border-cyan-300/30 bg-slate-950 p-5 shadow-[0_0_60px_rgba(34,211,238,0.35)]" onClick={(e) => e.stopPropagation()}><div className="mb-5 flex items-center justify-between gap-4 border-b border-cyan-300/15 pb-5"><div><div className="text-xs font-black tracking-[0.28em] text-cyan-300/80">HISTORY DETAIL</div><div className="mt-2 text-2xl font-black text-cyan-50">房號 {selectedHistory.roomNo}｜詳細AI分析</div></div><Button onClick={() => setSelectedHistory(null)} className="rounded-2xl bg-white/10 px-5 py-5 text-white hover:bg-white/20"><X className="mr-2 h-4 w-4" />關閉</Button></div><div className="grid gap-4 lg:grid-cols-4"><MetricCard title="目前狀態" value={selectedHistory.label} /><MetricCard title="回分傾向" value={selectedHistory.returnScore} tone="emerald" /><MetricCard title="咬分壓力" value={selectedHistory.biteScore} tone="rose" /><MetricCard title="本金適配" value={selectedHistory.bankrollFit} tone="yellow" /></div><AnalysisReport item={selectedHistory} /></div></div>}
     </div>
