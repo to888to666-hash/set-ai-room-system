@@ -411,9 +411,23 @@ async function createCode() {
     setTempCodes((old) => old.map((item) => item.code === code ? { ...item, expiresAt: Math.max(Date.now(), item.expiresAt) + addMinutes * 60 * 1000, active: true } : item));
   }
 
-  function toggleCode(code) {
-    setTempCodes((old) => old.map((item) => item.code === code ? { ...item, active: !item.active } : item));
-  }
+async function toggleCode(code) {
+  const target = tempCodes.find((item) => item.code === code);
+  if (!target) return;
+
+  const nextActive = !target.active;
+
+  await supabase
+    .from("temp_codes")
+    .update({ active: nextActive })
+    .eq("code", code);
+
+  setTempCodes((old) =>
+    old.map((item) =>
+      item.code === code ? { ...item, active: nextActive } : item
+    )
+  );
+}
 
   function logout() {
     setRole(null);
