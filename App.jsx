@@ -474,15 +474,7 @@ async function toggleCode(code) {
               <div className="mb-8 text-center">
                 <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-3xl border border-cyan-300/40 bg-cyan-400/15 shadow-[0_0_30px_rgba(34,211,238,0.9)]"><Cpu className="h-8 w-8 text-cyan-200" /></div>
                 <h1 className="relative inline-block text-3xl font-black tracking-[0.18em] text-cyan-100 drop-shadow-[0_0_22px_rgba(34,211,238,0.95)] md:text-5xl">
-  賽特AI選房
-
-  <span className="ml-3 align-middle text-sm font-medium tracking-[0.15em] text-cyan-300/80 drop-shadow-[0_0_8px_rgba(34,211,238,0.6)] md:text-lg">
-    • 安哥嘔心瀝血製作，請勿竊取
-  </span>
-
-  <br />
-
-  輔助系統
+  賽特AI選房<br />輔助系統
 </h1>
                 <p className="mt-3 text-sm text-cyan-100/70">SET AI ROOM ASSISTANT</p>
               </div>
@@ -522,7 +514,13 @@ async function toggleCode(code) {
         <header className="mb-6 flex flex-col gap-4 rounded-[2rem] border border-cyan-300/40 bg-slate-950/75 p-5 shadow-[0_0_30px_rgba(34,211,238,0.22),0_0_80px_rgba(59,130,246,0.16)] backdrop-blur-xl ring-1 ring-cyan-100/10 md:flex-row md:items-center md:justify-between">
           <div>
             <div className="mb-2 flex items-center gap-2 text-sm text-cyan-100/80"><Sparkles className="h-4 w-4" />AI ANALYSIS CONSOLE</div>
-            <h1 className="relative inline-block text-3xl font-black tracking-[0.18em] text-cyan-100 drop-shadow-[0_0_22px_rgba(34,211,238,0.95)] md:text-5xl">賽特AI選房輔助系統</h1>
+            <h1 className="relative inline-block text-3xl font-black tracking-[0.18em] text-cyan-100 drop-shadow-[0_0_22px_rgba(34,211,238,0.95)] md:text-5xl">
+  賽特AI選房輔助系統
+
+  <span className="ml-3 text-sm font-medium tracking-[0.12em] text-cyan-300/80 align-middle">
+    安哥嘔心瀝血製作，請勿竊取
+  </span>
+</h1>
             <p className="mt-2 text-sm text-slate-300">目前身份：{isMaster ? "最高權限管理者" : `臨時通行使用者 ${activeTempCode || ""}`}</p>
           </div>
           <Button onClick={logout} className="rounded-2xl bg-white/10 px-5 py-5 text-white hover:bg-white/20"><Power className="mr-2 h-4 w-4" />登出</Button>
