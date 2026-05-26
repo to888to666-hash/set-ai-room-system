@@ -473,7 +473,17 @@ async function toggleCode(code) {
             <Panel className="p-8">
               <div className="mb-8 text-center">
                 <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-3xl border border-cyan-300/40 bg-cyan-400/15 shadow-[0_0_30px_rgba(34,211,238,0.9)]"><Cpu className="h-8 w-8 text-cyan-200" /></div>
-                <h1 className="relative inline-block text-3xl font-black tracking-[0.18em] text-cyan-100 drop-shadow-[0_0_22px_rgba(34,211,238,0.95)] md:text-5xl">賽特AI選房<br />輔助系統</h1>
+                <h1 className="relative inline-block text-3xl font-black tracking-[0.18em] text-cyan-100 drop-shadow-[0_0_22px_rgba(34,211,238,0.95)] md:text-5xl">
+  賽特AI選房
+
+  <span className="ml-3 align-middle text-sm font-medium tracking-[0.15em] text-cyan-300/80 drop-shadow-[0_0_8px_rgba(34,211,238,0.6)] md:text-lg">
+    • 安哥嘔心瀝血製作，請勿竊取
+  </span>
+
+  <br />
+
+  輔助系統
+</h1>
                 <p className="mt-3 text-sm text-cyan-100/70">SET AI ROOM ASSISTANT</p>
               </div>
               <div className="space-y-4">
