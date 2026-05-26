@@ -342,19 +342,28 @@ export default function App() {
     return "可使用";
   }
 
-  function handleLogin() {
+async function handleLogin() {
     setLoginError("");
     if (passcode === MASTER_CODE) {
       setRole("master");
       setActiveTempCode(null);
       return;
     }
-    const code = tempCodes.find((item) => item.code === passcode);
-    if (code && code.active && Date.now() <= code.expiresAt) {
-      setRole("temp");
-      setActiveTempCode(code.code);
-      return;
-    }
+   const { data, error } = await supabase
+  .from('temp_codes')
+  .select('*')
+  .eq('code', passcode)
+  .single();
+
+if (
+  data &&
+  data.active &&
+  Date.now() <= new Date(data.expires_at).getTime()
+) {
+  setRole("temp");
+  setActiveTempCode(data.code);
+  return;
+}
     setLoginError("通行碼錯誤、已停用或已過期");
   }
 
