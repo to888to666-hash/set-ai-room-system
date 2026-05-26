@@ -1,9 +1,14 @@
+import { createClient } from '@supabase/supabase-js';
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Cpu, Eye, EyeOff, History, KeyRound, Lock, Plus, Power, Search, Sparkles, X } from "lucide-react";
 
 const MASTER_CODE = "coco8899";
+const supabaseUrl = 'https://obbfhjvgicttkknfvmql.supabase.co';
 
+const supabaseKey = 'sb_publishable_YhEF-yTNNH9Ikb7Q7VXRVQ_G5a_ou3c';
+
+const supabase = createClient(supabaseUrl, supabaseKey);
 const DEFAULT_FORM = {
   roomNo: "",
   bankroll: "",
