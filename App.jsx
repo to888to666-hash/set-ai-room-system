@@ -585,7 +585,30 @@ React.useEffect(() => {
     安哥嘔心瀝血製作，請勿竊取
   </span>
 </h1>
-            <p className="mt-2 text-sm text-slate-300">目前身份：{isMaster ? "最高權限管理者" : `臨時通行使用者 ${activeTempCode || ""}`}</p>
+            <p className="mt-2 text-sm text-slate-300">
+  目前身份：
+  {isMaster
+    ? "最高權限管理者"
+    : `臨時通行使用者 ${activeTempCode || ""} ｜ 剩餘 ${
+        (() => {
+          const current = tempCodes.find(
+            (item) => item.code === activeTempCode
+          );
+
+          if (!current) return "0:00";
+
+          const totalSeconds = Math.max(
+            0,
+            Math.floor((current.expiresAt - Date.now()) / 1000)
+          );
+
+          const minutes = Math.floor(totalSeconds / 60);
+          const seconds = totalSeconds % 60;
+
+          return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+        })()
+      }`}
+</p>
           </div>
           <Button onClick={logout} className="rounded-2xl bg-white/10 px-5 py-5 text-white hover:bg-white/20"><Power className="mr-2 h-4 w-4" />登出</Button>
         </header>
