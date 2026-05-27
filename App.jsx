@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Cpu, Eye, EyeOff, History, KeyRound, Lock, Plus, Power, Search, Sparkles, X } from "lucide-react";
 
