@@ -428,9 +428,42 @@ async function createCode() {
   ]);
 }
 
-  function extendCode(code, addMinutes) {
-    setTempCodes((old) => old.map((item) => item.code === code ? { ...item, expiresAt: Math.max(Date.now(), item.expiresAt) + addMinutes * 60 * 1000, active: true } : item));
+async function extendCode(code, addMinutes) {
+  const target = tempCodes.find((item) => item.code === code);
+  if (!target) return;
+
+  const nextExpiresAtMs =
+    Math.max(Date.now(), target.expiresAt) + addMinutes * 60 * 1000;
+
+  const nextExpiresAtISO = new Date(nextExpiresAtMs).toISOString();
+
+  const { error } = await supabase
+    .from("temp_codes")
+    .update({
+      expires_at: nextExpiresAtISO,
+      active: true,
+    })
+    .eq("code", code);
+
+  if (error) {
+    showToast("延長失敗，請稍後再試");
+    return;
   }
+
+  setTempCodes((old) =>
+    old.map((item) =>
+      item.code === code
+        ? {
+            ...item,
+            expiresAt: nextExpiresAtMs,
+            active: true,
+          }
+        : item
+    )
+  );
+
+  showToast(`已延長 ${addMinutes} 分鐘`);
+}
 
 async function toggleCode(code) {
   const target = tempCodes.find((item) => item.code === code);
