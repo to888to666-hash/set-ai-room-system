@@ -321,7 +321,8 @@ export default function App() {
   const [toast, setToast] = useState(null);
   const [sparks, setSparks] = useState([]);
   const [tempCodes, setTempCodes] = useState([{ code: "SET-DEMO88", minutes: 30, createdAt: Date.now(), expiresAt: Date.now() + 30 * 60 * 1000, active: true }]);
-
+  const [, forceUpdate] = useState(0);
+  
   const isMaster = role === "master";
   const currentHistory = isMaster ? masterHistory : tempHistoryMap[activeTempCode] || [];
   const latest = currentHistory[0];
@@ -329,7 +330,13 @@ export default function App() {
   function setFormValue(key, value) {
     setForm((old) => ({ ...old, [key]: value }));
   }
+useEffect(() => {
+  const timer = setInterval(() => {
+    forceUpdate((n) => n + 1);
+  }, 1000);
 
+  return () => clearInterval(timer);
+}, []);
   function showToast(message) {
     const id = safeId();
     setToast({ id, message });
@@ -634,7 +641,7 @@ React.useEffect(() => {
           {isMaster && <Panel>
             <div className="mb-5 flex items-center gap-3"><div className="rounded-2xl bg-cyan-400/10 p-3 text-cyan-200"><KeyRound className="h-6 w-6" /></div><div><Title>臨時通行碼管理</Title><p className="mt-4 text-sm text-slate-400">生成、停用、延長使用時間</p></div></div>
             <div className="flex gap-3"><input type="number" value={minutes} onChange={(e) => setMinutes(e.target.value)} className="w-full rounded-2xl border border-cyan-300/20 bg-slate-950/70 px-4 py-3 text-white outline-none" /><Button onClick={createCode} className="rounded-2xl bg-cyan-300 px-5 text-slate-950 hover:bg-cyan-200"><Plus className="h-4 w-4" /></Button></div>
-            <div className="mt-5 space-y-3">{tempCodes.map((item) => <div key={item.code} className="rounded-3xl border border-white/10 bg-white/[0.04] p-4"><div className="flex items-center justify-between gap-3"><div><div className="font-black tracking-widest text-cyan-100">{item.code}</div><div className="mt-1 text-xs text-slate-400">{tempStatus(item)}｜到期 {new Date(item.expiresAt).toLocaleTimeString("zh-TW", { hour12: false })}</div></div><div className="flex gap-2"><Button onClick={() => extendCode(item.code, 10)} className="rounded-xl bg-white/10 px-3 py-2 text-xs text-white hover:bg-white/20">+10分</Button><Button onClick={() => toggleCode(item.code)} className="rounded-xl bg-white/10 px-3 py-2 text-xs text-white hover:bg-white/20">{item.active ? "停用" : "啟用"}</Button></div></div></div>)}</div>
+            <div className="mt-5 space-y-3">{tempCodes.map((item) => <div key={item.code} className="rounded-3xl border border-white/10 bg-white/[0.04] p-4"><div className="flex items-center justify-between gap-3"><div><div className="font-black tracking-widest text-cyan-100">{item.code}</div><div className="mt-1 text-xs text-slate-400"><div className="mt-1 text-xs text-slate-400">{tempStatus(item)} ｜ 剩餘 {Math.max(0, Math.floor((item.expiresAt - Date.now()) / 1000 / 60))} 分鐘</div></div></div><div className="flex gap-2"><Button onClick={() => extendCode(item.code, 10)} className="rounded-xl bg-white/10 px-3 py-2 text-xs text-white hover:bg-white/20">+10分</Button><Button onClick={() => toggleCode(item.code)} className="rounded-xl bg-white/10 px-3 py-2 text-xs text-white hover:bg-white/20">{item.active ? "停用" : "啟用"}</Button></div></div></div>)}</div>
           </Panel>}
         </main>
 
