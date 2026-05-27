@@ -457,6 +457,30 @@ async function toggleCode(code) {
     setForm(DEFAULT_FORM);
   }
 
+React.useEffect(() => {
+  if (role !== "temp" || !activeTempCode) return;
+
+  const interval = setInterval(async () => {
+    const { data } = await supabase
+      .from("temp_codes")
+      .select("*")
+      .eq("code", activeTempCode)
+      .single();
+
+    const expired =
+      !data ||
+      !data.active ||
+      Date.now() > new Date(data.expires_at).getTime();
+
+    if (expired) {
+      alert("通行碼已失效，系統將自動登出");
+      logout();
+    }
+  }, 5000);
+
+  return () => clearInterval(interval);
+}, [role, activeTempCode]);
+  
   function clickFx(event) {
     const id = safeId();
     setSparks((old) => [...old.slice(-5), { id, x: event.clientX, y: event.clientY }]);
