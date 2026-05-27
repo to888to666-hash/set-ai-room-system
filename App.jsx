@@ -390,6 +390,14 @@ if (
 ) {
   setRole("temp");
   setActiveTempCode(data.code);
+  setTempCodes((old) => [
+  {
+    code: data.code,
+    expiresAt: new Date(data.expires_at).getTime(),
+    active: data.active,
+  },
+  ...old.filter((item) => item.code !== data.code),
+]);
   return;
 }
     setLoginError("通行碼錯誤、已停用或已過期");
